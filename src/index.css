@@ -1,0 +1,206 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Northern Lights Theme - Beautiful design system for content sharing
+All colors in HSL format as required by the system.
+*/
+
+@layer base {
+  :root {
+    /* Northern Lights Light Theme */
+    --background: 286 7% 98%;
+    --foreground: 0 0% 20%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 20%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 20%;
+
+    --primary: 150 85% 45%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 261 75% 55%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 98 25% 85%;
+    --muted-foreground: 0 0% 54%;
+
+    --accent: 212 65% 70%;
+    --accent-foreground: 0 0% 20%;
+
+    --destructive: 25 90% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 87%;
+    --input: 0 0% 87%;
+    --ring: 150 85% 45%;
+
+    --radius: 0.5rem;
+
+    /* Enhanced shadows for depth */
+    --shadow-elegant: 0 4px 20px -2px hsl(0 0% 0% / 0.1);
+    --shadow-glow: 0 0 30px hsl(150 85% 45% / 0.2);
+    
+    /* Animation variables */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-spring: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    /* Typography */
+    --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-serif: 'Source Serif 4', serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    
+    /* Tracking variations */
+    --tracking-tight: -0.025em;
+    --tracking-normal: 0em;
+    --tracking-wide: 0.025em;
+    --tracking-wider: 0.05em;
+
+    --sidebar-background: 286 7% 98%;
+    --sidebar-foreground: 0 0% 20%;
+    --sidebar-primary: 150 85% 45%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 212 65% 70%;
+    --sidebar-accent-foreground: 0 0% 20%;
+    --sidebar-border: 0 0% 87%;
+    --sidebar-ring: 150 85% 45%;
+  }
+
+  .dark {
+    /* Northern Lights Dark Theme */
+    --background: 264 25% 23%;
+    --foreground: 0 0% 92%;
+
+    --card: 224 15% 32%;
+    --card-foreground: 0 0% 92%;
+
+    --popover: 224 15% 32%;
+    --popover-foreground: 0 0% 92%;
+
+    --primary: 150 85% 45%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 245 55% 50%;
+    --secondary-foreground: 0 0% 92%;
+
+    --muted: 0 0% 39%;
+    --muted-foreground: 0 0% 72%;
+
+    --accent: 261 75% 55%;
+    --accent-foreground: 0 0% 92%;
+
+    --destructive: 25 90% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 39%;
+    --input: 0 0% 39%;
+    --ring: 150 85% 45%;
+
+    --shadow-elegant: 0 4px 20px -2px hsl(0 0% 0% / 0.3);
+    --shadow-glow: 0 0 30px hsl(150 85% 45% / 0.3);
+
+    --sidebar-background: 264 25% 23%;
+    --sidebar-foreground: 0 0% 92%;
+    --sidebar-primary: 150 85% 45%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 261 75% 55%;
+    --sidebar-accent-foreground: 0 0% 92%;
+    --sidebar-border: 0 0% 39%;
+    --sidebar-ring: 150 85% 45%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    letter-spacing: var(--tracking-normal);
+  }
+}
+
+@layer components {
+  /* Loading animations */
+  .aurora-glow {
+    background: linear-gradient(45deg, 
+      hsl(var(--primary) / 0.2), 
+      hsl(var(--accent) / 0.2), 
+      hsl(var(--secondary) / 0.2));
+    animation: aurora 3s ease-in-out infinite;
+  }
+  
+  .pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+  
+  .slide-in-up {
+    animation: slide-in-up 0.6s ease-out;
+  }
+  
+  .fade-in-delayed {
+    animation: fade-in 0.8s ease-out 0.3s both;
+  }
+}
+
+@layer utilities {
+  /* Custom keyframes */
+  @keyframes aurora {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  
+  @keyframes pulse-glow {
+    0%, 100% { 
+      box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
+      transform: scale(1);
+    }
+    50% { 
+      box-shadow: 0 0 40px hsl(var(--primary) / 0.5);
+      transform: scale(1.02);
+    }
+  }
+  
+  @keyframes slide-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes shimmer {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(100%); }
+  }
+  
+  .shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .shimmer::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+      transparent, 
+      hsl(var(--primary) / 0.2), 
+      transparent);
+    animation: shimmer 2s infinite;
+  }
+}
