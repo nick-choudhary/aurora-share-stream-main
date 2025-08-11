@@ -10,8 +10,6 @@ There are several ways of editing your application.
 
 **Use your preferred IDE**
 
-**Use your preferred IDE**
-
 If you want to work locally using your own IDE, you can clone this repo and push changes.
 
 The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
@@ -70,6 +68,8 @@ Option A: One-click deploy
    - `VITE_WEBHOOK_URL` = your n8n webhook URL (e.g., `https://your-n8n-instance.com/webhook/get-comments`)
 4. Deploy
 
+After first deploy, remember to set/update `VITE_WEBHOOK_URL` in Netlify and then trigger a redeploy so the new value is applied to both the frontend and the Netlify Function.
+
 Option B: Manual
 
 1. Fork this repository
@@ -78,10 +78,11 @@ Option B: Manual
 4. Add `VITE_WEBHOOK_URL` as an environment variable
 5. Deploy
 
+Important: Any change to `VITE_WEBHOOK_URL` requires triggering a new deploy in Netlify.
+
 ### Environment Variables Required
 
 - `VITE_WEBHOOK_URL` (required): Your n8n webhook URL that processes LinkedIn comment data
-- Alternatively for local demo: visit the app with `?webhook=<your-url>` or set it in the UI box
 
 ## Custom domain
 
