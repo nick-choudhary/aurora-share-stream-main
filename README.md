@@ -54,6 +54,15 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
+## Features
+
+- **Beautiful Aurora-themed UI** - Custom Northern Lights design with smooth animations
+- **Built-in Rate Limiting** - Protect your webhook with automatic rate limits (5 req/5min per IP, 30s cooldown)
+- **Form Validation** - Real-time validation for LinkedIn comment URLs
+- **Responsive Design** - Works seamlessly on desktop and mobile devices
+- **Dark Mode Support** - Automatic theme switching
+- **Error Handling** - User-friendly error messages and retry guidance
+
 ## How can I deploy this project?
 
 ### Quick Deploy to Netlify
@@ -82,7 +91,14 @@ Important: Any change to `VITE_WEBHOOK_URL` requires triggering a new deploy in 
 
 ### Environment Variables Required
 
-- `VITE_WEBHOOK_URL` (required): Your n8n webhook URL that processes LinkedIn comment data
+**Option 1: With Rate Limiting (Recommended)**
+- `VITE_WEBHOOK_URL` = `/.netlify/functions/submit-comment`
+- `N8N_WEBHOOK_URL` = `https://your-n8n-instance.com/webhook/get-comments`
+
+**Option 2: Direct Access (No Rate Limiting)**
+- `VITE_WEBHOOK_URL` = `https://your-n8n-instance.com/webhook/get-comments`
+
+**Note:** For best security, use Option 1 with the built-in rate-limited proxy. Set both environment variables in Netlify, then redeploy.
 
 ## Custom domain
 
