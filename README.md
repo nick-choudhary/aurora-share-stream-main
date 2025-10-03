@@ -67,38 +67,61 @@ This project is built with:
 
 ### Quick Deploy to Netlify
 
-Option A: One-click deploy
-
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/nick-choudhary/aurora-share-stream-main)
 
-1. Click the button above and connect your GitHub repo
-2. Netlify will auto-detect `npm run build` and `dist` via `netlify.toml`
-3. Set environment variables in Netlify → Site settings → Environment variables:
-   - `VITE_WEBHOOK_URL` = your n8n webhook URL (e.g., `https://your-n8n-instance.com/webhook/get-comments`)
-4. Deploy
+#### Deployment Steps:
 
-After first deploy, remember to set/update `VITE_WEBHOOK_URL` in Netlify and then trigger a redeploy so the new value is applied to both the frontend and the Netlify Function.
+1. **Connect Your Repository**
+   - Click the button above and connect your GitHub repo
+   - Netlify will auto-detect `npm run build` and `dist` via `netlify.toml`
 
-Option B: Manual
+2. **Configure Environment Variables**
+   
+   Go to: **Netlify Dashboard → Your Site → Site configuration → Environment variables**
+   
+   **Option A: With Rate Limiting (Recommended) ⭐**
+   
+   Add these 2 variables:
+   - `VITE_WEBHOOK_URL` = `/.netlify/functions/submit-comment`
+   - `N8N_WEBHOOK_URL` = `https://your-n8n-instance.com/webhook/get-comments`
+   
+   **Option B: Direct Access (No Rate Limiting)**
+   
+   Add this 1 variable:
+   - `VITE_WEBHOOK_URL` = `https://your-n8n-instance.com/webhook/get-comments`
 
-1. Fork this repository
-2. In Netlify, create a new site from Git, pick your fork
-3. Build command: `npm run build`; Publish directory: `dist`
-4. Add `VITE_WEBHOOK_URL` as an environment variable
-5. Deploy
+3. **Deploy**
+   - Click "Deploy site"
+   - Wait for build to complete
 
-Important: Any change to `VITE_WEBHOOK_URL` requires triggering a new deploy in Netlify.
+**Important Notes:**
+- Environment variables can be updated anytime in **Site configuration → Environment variables**
+- After changing `VITE_WEBHOOK_URL`, trigger a redeploy for changes to take effect
+- After changing `N8N_WEBHOOK_URL` (backend only), no redeploy needed - changes are instant!
 
-### Environment Variables Required
+### Environment Variables Reference
 
-**Option 1: With Rate Limiting (Recommended)**
-- `VITE_WEBHOOK_URL` = `/.netlify/functions/submit-comment`
-- `N8N_WEBHOOK_URL` = `https://your-n8n-instance.com/webhook/get-comments`
+Configure these in: **Netlify Dashboard → Your Site → Site configuration → Environment variables**
 
-**Option 2: Direct Access (No Rate Limiting)**
-- `VITE_WEBHOOK_URL` = `https://your-n8n-instance.com/webhook/get-comments`
+| Variable | Required | Description | Example |
+|----------|----------|-------------|---------|
+| `VITE_WEBHOOK_URL` | Yes | Frontend webhook endpoint | `/.netlify/functions/submit-comment` or `https://your-n8n.com/webhook` |
+| `N8N_WEBHOOK_URL` | Only if using rate limiting | Your actual n8n webhook URL (backend) | `https://your-n8n-instance.com/webhook/get-comments` |
 
-**Note:** For best security, use Option 1 with the built-in rate-limited proxy. Set both environment variables in Netlify, then redeploy.
+**Configuration Examples:**
+
+**✅ Recommended: With Rate Limiting**
+```
+VITE_WEBHOOK_URL=/.netlify/functions/submit-comment
+N8N_WEBHOOK_URL=https://your-n8n-instance.com/webhook/get-comments
+```
+
+**Alternative: Direct Access (No Protection)**
+```
+VITE_WEBHOOK_URL=https://your-n8n-instance.com/webhook/get-comments
+```
+
+**💡 Tip:** You can change `N8N_WEBHOOK_URL` anytime without redeploying! Only `VITE_WEBHOOK_URL` changes require a redeploy.
 
 ## Custom domain
 
