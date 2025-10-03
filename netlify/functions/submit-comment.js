@@ -217,7 +217,9 @@ exports.handler = async (event) => {
   const webhookUrl = process.env.N8N_WEBHOOK_URL;
 
   if (!webhookUrl) {
-    console.error("N8N_WEBHOOK_URL not configured in Netlify environment variables");
+    console.error(
+      "N8N_WEBHOOK_URL not configured in Netlify environment variables"
+    );
     return jsonResponse(500, {
       success: false,
       message:
@@ -242,7 +244,7 @@ exports.handler = async (event) => {
         (webhookResponse.ok
           ? "Request processed successfully"
           : "Request failed"),
-      data: webhookResponse.data.data || webhookResponse.data,
+      // data: webhookResponse.data.data || webhookResponse.data,
     });
   } catch (error) {
     console.error("Error forwarding to webhook:", error);
