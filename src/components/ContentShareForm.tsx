@@ -70,33 +70,6 @@ const ContentShareForm = () => {
     return () => controller.abort();
   }, [effectiveWebhookUrl]);
 
-  // Background health check
-  useEffect(() => {
-    const url = effectiveWebhookUrl;
-    if (!url) {
-      setHealth(null);
-      return;
-    }
-    const controller = new AbortController();
-    const q = new URLSearchParams({ url });
-    fetch(`/.netlify/functions/check-webhook?${q.toString()}`, {
-      method: "GET",
-      signal: controller.signal,
-    })
-      .then(async (res) => {
-        const data = await res.json().catch(() => ({}));
-        if (res.ok && data) {
-          setHealth({ ok: true, status: data.status, method: data.method });
-        } else {
-          setHealth({ ok: false, status: data.status, message: data.message });
-        }
-      })
-      .catch((err) => {
-        setHealth({ ok: false, message: err.message });
-      });
-    return () => controller.abort();
-  }, [effectiveWebhookUrl]);
-
   const extractIdFromUrl = (url: string): string | null => {
     try {
       // Extract ID from various URL patterns
@@ -254,10 +227,12 @@ const ContentShareForm = () => {
     <div className="w-full max-w-2xl mx-auto space-y-8">
       {/* Webhook status (checked via backend) */}
       <p className="text-xs text-muted-foreground">
-        Webhook status: {" "}
+        Webhook status:{" "}
         {effectiveWebhookUrl ? (
           health?.ok ? (
-            <span className="text-green-600">reachable ({health?.method} {health?.status})</span>
+            <span className="text-green-600">
+              reachable ({health?.method} {health?.status})
+            </span>
           ) : health?.ok === false ? (
             <span className="text-amber-600">configured but unreachable</span>
           ) : (
