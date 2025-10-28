@@ -4,8 +4,9 @@
  *
  * Rate Limits:
  * - Per IP: 5 requests per 5 minutes
- * - Cooldown: 30 seconds between consecutive requests
+ * - Cooldown: 5 seconds between consecutive requests
  * - Global: 100 requests per minute
+ * - Request Timeout: 25 seconds
  *
  * Usage: POST /.netlify/functions/submit-comment
  * Body: { comment_url: string, id: string }
@@ -13,10 +14,10 @@
 
 const RATE_LIMIT_PER_IP = 5;
 const RATE_LIMIT_WINDOW_MS = 5 * 60 * 1000; // 5 minutes
-const COOLDOWN_MS = 30 * 1000; // 30 seconds
+const COOLDOWN_MS = 5 * 1000; // 5 seconds (minimal protection against accidental double-clicks)
 const GLOBAL_LIMIT = 100;
 const GLOBAL_WINDOW_MS = 60 * 1000; // 1 minute
-const REQUEST_TIMEOUT_MS = 10000; // 10 seconds
+const REQUEST_TIMEOUT_MS = 25000; // 25 seconds (Netlify functions have 26s default timeout)
 
 // In-memory storage (resets on function cold start)
 const ipRequestMap = new Map(); // { ip: [timestamps] }
